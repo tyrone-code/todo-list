@@ -9,11 +9,13 @@
 
 .main-flex-container{
     display: flex;
-    border:2px solid red;
 
 }
 
+div {
+    border:2px solid red;
 
+}
 .main-flex-container div {
     /* border: 2px solid orange; */
     flex-grow: 2;
@@ -24,3 +26,18 @@
     padding-bottom:12rem;
 }
 .main-flex-container div:nth-of-type(2) {flex-grow: 15;}
+
+/* 
+li {
+    border:2px dashed grey;
+} */
+
+
+#todo-parent {
+    vertical-align: bottom;
+
+}
+
+.checked {
+    text-decoration: line-through;
+  }
