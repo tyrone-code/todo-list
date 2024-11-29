@@ -5,41 +5,61 @@ import './styles.css'
 let ul = document.getElementById("todo-parent");
 let incrementedId = 2;
 
+
+const variableDump = {
+     userPrompt: function(){
+        return prompt("enter a todo!")
+     },
+     userResponse: false,
+}
 // Function to display user input and add a checkbox
-let displayUserInput = function(id) {
-    let createCheckBox = document.createElement("input");
-    createCheckBox.type = "checkbox";
-    createCheckBox.setAttribute("class", "box");
+const displayUserInput = function(id) {
+    let storedTxt = variableDump.userPrompt();
+     
+    if(storedTxt !== null){
+        variableDump.userResponse = true;
+        let createCheckBox = document.createElement("input");
+        createCheckBox.type = "checkbox";
+        createCheckBox.setAttribute("class", "box");
+        let p = document.getElementById(id);
+        p.textContent = storedTxt;
     
-    let userInput = prompt("Enter a todo!");
-    let p = document.getElementById(id);
-    p.textContent = userInput;
-
-    // Append the checkbox to the todo item
-    p.appendChild(createCheckBox);
+        // Append the checkbox to the todo item
+        p.appendChild(createCheckBox);
+    }else {
+        return
+    }
 };
-
+// console.log(displayUserInput())
 // Function to create a new to-do list item
-let createList = function() {
-    let newPara = document.createElement("p");
-    newPara.textContent = '+ Add Todo!';
-    ul.appendChild(newPara);
-    newPara.setAttribute("id", incrementedId++);
-    console.log(incrementedId);
+const createList = function() {
+    if(variableDump.userResponse){
+        let newPara = document.createElement("p");
+        newPara.textContent = '+ Add Todo!';
+        ul.appendChild(newPara);
+        newPara.setAttribute("id", incrementedId++);
+    }
+
 };
+
+// Add event listener to the 'addToDo' button
+ul.addEventListener('click', (e) => {
+    if (e.target && e.target.classList.contains('box')) {
+
+        // Toggle the 'checked' class when checkbox state changes
+        e.target.parentNode.classList.toggle('checked');
+    }else {
+        let ElementId = e.target.id;
+        displayUserInput(ElementId);
+        createList()
+    
+    }
+
+});
+
+
 
 // Event delegation for dynamically added checkboxes
 ul.addEventListener('change', function(e) {
-    if (e.target && e.target.classList.contains('box')) {
-        // Toggle the 'checked' class when checkbox state changes
-        e.target.parentNode.classList.toggle('checked');
-    }
-});
-
-// Add event listener to the 'addToDo' button
-addToDo.addEventListener('click', (e) => {
-    let ElementId = e.target.id;
-    displayUserInput(ElementId);
-    createList()
-
+   
 });
