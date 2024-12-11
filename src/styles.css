@@ -35,6 +35,10 @@ li {
 
 #todo-parent {
     vertical-align: bottom;
+        border:2px blue dashed;
+width:100%;
+height:00000.1%;
+
 
 }
 
@@ -42,3 +46,14 @@ li {
     text-decoration: line-through;
   }
 
+
+
+  h4 {
+    padding-left:30%;
+  }
+
+
+  p {
+    /* border:2px blue dashed; */
+    width:100%;
+  }
