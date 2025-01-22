@@ -8,14 +8,8 @@ let ul = document.getElementById("todo-parent");
 // let button = document.getElementById("button");
 
 let incrementedId = 2;
+const children = document.querySelectorAll('#todo-parent')
 
-
-const globalVariables = {
-     userPrompt: function(){
-        return prompt("enter a todo!")
-     },
-     userResponse: false,
-}
 
     const makeUserInputTextBox = function(){
         let input = document.createElement("input")
@@ -28,20 +22,22 @@ const globalVariables = {
     
 
 const displayUserInput = () => {
+
   const textInput = document.getElementById("user-input");
- let paragraph =  document.createElement("p")
-  paragraph.textContent  = textInput.value 
-  paragraph.setAttribute("id",incrementedId++)
-  textInput.replaceWith(paragraph)
-  if(paragraph !== null){
-    let createCheckBox = document.createElement("input");
-    createCheckBox.type = "checkbox";
-    createCheckBox.setAttribute("class", "box");
-    paragraph.appendChild(createCheckBox)
+  if(textInput.value !== ""){
+    let paragraph =  document.createElement("p")
+    paragraph.textContent  = textInput.value 
+    paragraph.setAttribute("id",incrementedId++)
+    textInput.replaceWith(paragraph)
+      let createCheckBox = document.createElement("input");
+      createCheckBox.type = "checkbox";
+      createCheckBox.setAttribute("class", "chBox");
+      paragraph.appendChild(createCheckBox)
+  }else {
+    return
+  }
   }
  
-
-}
 
 
 // Function to display user input and add a checkbox
@@ -52,36 +48,62 @@ const getInputTextBox = function(id) {
         createdInput.focus();
 };
 // Function to create a new to-do list item
-const createList = function() {
+const createToDoParagraph = function() {
         let newPara = document.createElement("p");
-        newPara.textContent = '+ Add Todo!';
+        newPara.textContent = '+ add to do!';
         ul.appendChild(newPara);
         newPara.setAttribute("id", incrementedId++);
-  
+        newPara.setAttribute("class", "to-do");
+
+  return newPara.textContent
 };
 
 // Add event listener to the 'addToDo' button
 ul.addEventListener('click', (e) => {
-    if (e.target && e.target.classList.contains('box')) {
+
+  if (e.target && e.target.classList.contains('chBox')) {
 
         // Toggle the 'checked' class when checkbox state changes
         e.target.parentNode.classList.toggle('checked');
     }else {
         let ElementId = e.target.id;
+        
         getInputTextBox(ElementId);
-        createList()
-    
     }
+// if (e.target.classList.contains('to-do')){
+
+//   }
 
 });
 
+
+
 document.addEventListener('keydown', keyPressed);
+// let toDoText = createToDoParagraph();
+
 
 function keyPressed(e) {
+
   if(e.code === "Enter") {
     displayUserInput()
+    let isToDoClass = document.getElementsByClassName('to-do');
+    // only if it equals zero make a todoParagraph
+    if (isToDoClass.length === 0) {
+      createToDoParagraph();
+
+    }else {
+      console.log(isToDoClass.length)
+    }
+
+
+
+
+    // children.forEach(child => {
+    //   console.log(child)
+    // }) 
 }
 }
+
 
 // Event delegation for dynamically added checkboxes
 // button.addEventListener('click', function(e) {
