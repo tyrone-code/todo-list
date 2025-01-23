@@ -6,22 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
     <header class="header">
-        <h1 class="header-text">To do list</h1>
+        <h1 class="header-text">To Do List</h1>
     </header>
     <div class="main-flex-container" id="main-container">
         <div class="sidebar">
             <h3>Inbox</h3>
             <h1>Projects</h1>
-            <h4> + Add project</h4>
+            <div id="append-projects">
+                <h4 id="add-project"> + Add project</h4>
+            </div>
         </div>
         <div id="todo-list-items">
-            <h4>Press Enter to confirm your to do!</h4>
+            <h4>Press Enter key to confirm</h4>
+            <h3>Inbox</h3>
             <ul id="todo-parent">
-                <p id="1" class="to-do">+ add to do!</p>
+                <p id="1" class="to-do">+ Add to do!</p>
 
 
             </ul>

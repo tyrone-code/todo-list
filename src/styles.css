@@ -1,9 +1,17 @@
 
+body {
+        margin: 0;
+        padding: 0;
+        font-family: "Roboto", serif;
 
-
+}
 .header {
     border:2px solid rgb(117, 119, 90);
-    text-align: center;
+    text-align: left;
+    background-color: #333333;
+    color: azure;
+    font-family: "Roboto", serif;
+    padding:1rem;
 }
 
 
@@ -13,7 +21,7 @@
 }
 
 div {
-    border:2px solid red;
+    border:2px solid rgb(34, 31, 31);
 
 }
 .main-flex-container div {
@@ -22,8 +30,12 @@ div {
 }
 
 .sidebar {
-    border:1px solid blue;
+    border:1px solid rgb(22, 22, 24);
     padding-bottom:12rem;
+}
+
+.sidebar h3 {
+    font-size: 1.5rem;
 }
 .main-flex-container div:nth-of-type(2) {flex-grow: 15;}
 
@@ -35,9 +47,20 @@ li {
 
 #todo-parent {
     vertical-align: bottom;
-        border:2px blue dashed;
 width:100%;
-height:00000.1%;
+height:0.1%;
+
+.to-do {
+    cursor: pointer;
+    padding:10px;
+    width:50rem;
+
+}
+
+.to-do:hover {
+    background: rgb(166, 166, 167);
+
+}
 
 
 }
@@ -50,6 +73,12 @@ height:00000.1%;
 
   h4 {
     padding-left:30%;
+        font-family: "Roboto", serif;
+
+  }
+  h3 {
+    padding-left:1%;
+    font-family: "Roboto", serif;
   }
 
 
@@ -57,3 +86,51 @@ height:00000.1%;
     /* border:2px blue dashed; */
     width:100%;
   }
+
+
+  .sidebar-text {
+    text-align: center;
+  }
+
+  #add-project {
+    margin: auto;
+    /* border:2px dashed blue; */
+  }
+  #todo-list-items h4 {
+    margin: auto;
+    padding-top:1.2rem;
+    width:50%;
+  }
+
+  #todo-list-items h3{
+  font-size: 2rem;
+  }
+
+  
+
+
+
+
+
+
+
+
+
+#user-input {
+    border: 0;
+    border-bottom: 2px solid Gray;
+    outline: 0;
+    font-size: 1rem;
+    color: black;
+    width:25%;
+}  
+
+
+#add-project-input {
+    border: 0;
+    border-bottom: 2px solid rgb(0, 0, 0);
+    outline: 0;
+    font-size: 1rem;
+    color: black;
+    width:85%;
+}  
