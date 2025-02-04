@@ -18,23 +18,36 @@
     </header>
     <div class="main-flex-container" id="main-container">
         <div class="sidebar">
-            <h3>Inbox</h3>
-            <h1>Projects</h1>
-            <div id="append-projects">
-                <h4 id="add-project"> + Add project</h4>
+            <div class="tab-group">
+                <h3 class="tab is-active" id="0">Inbox</h3>
+                <h1 class="tab" id="1">Projects</h1>
+                <div id="append-projects">
+                    <h4 id="add-project"> + Add project</h4>
+                </div>
             </div>
+
         </div>
-        <div id="todo-list-items">
-            <h4>Press Enter key to confirm</h4>
-            <h3>Inbox</h3>
-            <ul id="todo-parent">
-                <p id="1" class="to-do">+ Add to do!</p>
+        <div class="panel-group">
+            <div class="panel todo-list-items is-show">
+                <h4>Press Enter key to confirm</h4>
+                <h3>Inbox</h3>
+                <ul class="todo-parent">
+                    <p id="asd1" class="to-do">+ Add to do!</p>
 
 
-            </ul>
+                </ul>
+            </div>
+            <div class="panel todo-list-items">
+                <h4>Press Enter key to confirm</h4>
+                <h3>Projects</h3>
+                <ul class="todo-parent">
+                    <p id="asd0" class="to-do">+ Add to do!</p>
+
+
+                </ul>
+            </div>
+
         </div>
-
-
     </div>
 </body>
 

@@ -3,14 +3,14 @@
 // index.js
 import { addToDo } from "./todo-input.js";
 import './styles.css'
-
-let todoListParentContainer = document.getElementById("todo-parent");
-let addProject = document.getElementById("add-project");
+const todoListParentContainer = document.querySelectorAll(".todo-parent")
 let addProjectInputBar = false;
 let inputBoxMade = false;
 let incrementedId = 2;
-let appendProjectsContainer = document.getElementById("append-projects")
-const children = document.querySelectorAll('#todo-parent')
+const appendProjectsContainer = document.getElementById("append-projects")
+const isActive = document.getElementsByClassName("is-active");
+let currentTabId = 0;
+
 
 
     const makeUserInputTextBox = function(){
@@ -85,18 +85,23 @@ const getInputTextBox = function(id) {
         createdInput.focus();
 };
 // Function to create a new to-do list item
-const createToDoParagraph = function() {
+const createToDoParagraph = function(num) {
         let newPara = document.createElement("p");
         newPara.textContent = '+ Add task';
-        todoListParentContainer.appendChild(newPara);
+        todoListParentContainer[num].appendChild(newPara);
+        
         newPara.setAttribute("id", incrementedId++);
         newPara.setAttribute("class", "to-do");
 
-  return newPara.textContent
+
 };
 
 // Add event listener to the 'addToDo' button
-todoListParentContainer.addEventListener('click', (e) => {
+
+
+todoListParentContainer.forEach(element => {
+  console.log(element)
+element.addEventListener('click', (e) => {
 
   if (e.target && e.target.classList.contains('chBox')) {
 
@@ -109,9 +114,9 @@ todoListParentContainer.addEventListener('click', (e) => {
         
       getInputTextBox(ElementId);
     }
-// if (e.target.classList.contains('to-do')){
 
-//   }
+
+});
 
 });
 
@@ -140,7 +145,32 @@ function projectKeyPressed(e) {
 
 
 });
+// sidebarText.addEventListener('click', function(event) {
+//   let targetElement = event.target;  // Get the element that was clicked
+//   alert(targetElement.id);  // Logs the ID of the clicked element
+// });
 
+
+
+document.addEventListener('DOMContentLoaded', function(){
+  const tabs = document.getElementsByClassName('tab');
+  for(let i = 0; i < tabs.length; i++) {
+    tabs[i].addEventListener('click', tabSwitch);
+  }
+
+  function tabSwitch(event){
+    document.getElementsByClassName('is-active')[0].classList.remove('is-active');
+    this.classList.add('is-active');
+    document.getElementsByClassName('is-show')[0].classList.remove('is-show');
+    const arrayTabs = Array.prototype.slice.call(tabs);
+    const index = arrayTabs.indexOf(this);
+    document.getElementsByClassName('panel')[index].classList.add('is-show');
+    let targetId = event.target.id;
+    currentTabId = targetId;
+    console.log(currentTabId)
+    return targetId;
+  };
+});
 
 
 document.addEventListener('keydown', keyPressed);
@@ -148,86 +178,18 @@ document.addEventListener('keydown', keyPressed);
 
 
 function keyPressed(e) {
-
   if(e.code === "Enter" && inputBoxMade) {
     displayUserInput()
     inputBoxMade = false;
     let isToDoClass = document.getElementsByClassName('to-do');
     // only if it equals zero make a todoParagraph
-    if (isToDoClass.length === 0) {
-      createToDoParagraph();
 
-    }else {
-      console.log(isToDoClass.length)
-    }
+      createToDoParagraph(currentTabId);
+      
+    // if (isToDoClass.length === 0) {
 
-
-
-
-   
+    // }else {
+    //   console.log(isToDoClass.length)
+    // }
 }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

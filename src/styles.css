@@ -24,6 +24,12 @@ div {
     border:2px solid rgb(34, 31, 31);
 
 }
+
+#append-projects {
+  border:none;
+  cursor:pointer;
+
+}
 .main-flex-container div {
     /* border: 2px solid orange; */
     flex-grow: 2;
@@ -45,7 +51,7 @@ li {
 } */
 
 
-#todo-parent {
+.todo-parent {
     vertical-align: bottom;
 width:100%;
 height:0.1%;
@@ -58,7 +64,8 @@ height:0.1%;
 }
 
 .to-do:hover {
-    background: rgb(166, 166, 167);
+     background: rgb(221, 221, 221);
+
 
 }
 
@@ -94,20 +101,27 @@ height:0.1%;
 
   #add-project {
     margin: auto;
+    padding:0.4rem;
+    text-align: center;
+    
     /* border:2px dashed blue; */
   }
-  #todo-list-items h4 {
+  .tab.is-active h4 {
     margin: auto;
     padding-top:1.2rem;
     width:50%;
   }
 
-  #todo-list-items h3{
+  .todo-list-items h3{
   font-size: 2rem;
   }
 
   
 
+  #add-project:hover {
+    background: rgb(221, 221, 221);
+
+}
 
 
 
@@ -134,3 +148,23 @@ height:0.1%;
     color: black;
     width:85%;
 }  
+
+
+.tab{
+  padding:5px;
+  text-align:center;
+  cursor:pointer;
+}
+
+.tab.is-active{
+border:2px solid blue;
+}
+
+.panel{
+  display:none;
+}
+
+
+.panel.is-show{
+  display:block;
+}
