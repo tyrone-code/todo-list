@@ -157,7 +157,7 @@ height:0.1%;
 }
 
 .tab.is-active{
-border:2px solid blue;
+border-bottom:2px solid blue;
 }
 
 .panel{

@@ -6,10 +6,17 @@ import './styles.css'
 const todoListParentContainer = document.querySelectorAll(".todo-parent")
 let addProjectInputBar = false;
 let inputBoxMade = false;
-let incrementedId = 2;
+let uniqueID = () => {
+  return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+}
+
+let incrementedID = 0;
 const appendProjectsContainer = document.getElementById("append-projects")
 const isActive = document.getElementsByClassName("is-active");
 let currentTabId = 0;
+let panelName = ""
 
 
 
@@ -33,12 +40,11 @@ let currentTabId = 0;
     
 
 const displayUserInput = () => {
-
   const textInput = document.getElementById("user-input");
   if(textInput.value !== ""){
     let paragraph =  document.createElement("p")
     paragraph.textContent  = textInput.value 
-    paragraph.setAttribute("id",incrementedId++)
+    paragraph.setAttribute("id",uniqueID())
     textInput.replaceWith(paragraph)
       let createCheckBox = document.createElement("input");
       createCheckBox.type = "checkbox";
@@ -48,6 +54,10 @@ const displayUserInput = () => {
     return
   }
   }
+
+
+
+
  
   const projectSideBarDisplayUserInput = () => {
 
@@ -55,17 +65,49 @@ const displayUserInput = () => {
     if(textInput.value !== ""){
       let paragraph =  document.createElement("p")
       paragraph.textContent  = textInput.value 
-      paragraph.setAttribute("id",incrementedId++)
+      paragraph.setAttribute("id",++incrementedID)
       textInput.replaceWith(paragraph)
-      paragraph.setAttribute("class","sidebar-text")
-        // let createCheckBox = document.createElement("input");
-        // createCheckBox.type = "checkbox";
-        // createCheckBox.setAttribute("class", "chBox");
-        // paragraph.appendChild(createCheckBox)
-    }else {
-      return
+      paragraph.setAttribute("class","tab sidebar-text")
+       let paragraphText = paragraph.textContent;
+       panelName = paragraphText;
+       createDisplayPanel();
     }
+
+
     }
+    const createDisplayPanel = () => {
+      let panelGroupParent = document.getElementsByClassName("panel-group");
+      let panelDiv = document.createElement("div");
+      let h4 = document.createElement("h4")
+      let h3 = document.createElement("h3");
+      let ulParent = document.createElement("ul")
+
+      panelDiv.setAttribute("class", "panel todo-list-items");
+      panelGroupParent[0].appendChild(panelDiv);
+
+       panelDiv.appendChild(h4);
+       panelDiv.appendChild(h3)
+       h4.textContent = "Press Enter key to confirm";
+  
+       h3.textContent = panelName;
+    // panelParent.appendChild(ulParent);
+      // newPara.setAttribute("class", uniqueID());
+
+
+    
+
+     
+  //     <div class="panel todo-list-items">
+  //     <h4>Press Enter key to confirm</h4>
+  //     <h3>{Name}</h3>
+  //     <ul class="todo-parent">
+  //         <p id="asd2" class="to-do">+ Add to do!</p>
+  
+  
+  //     </ul>
+  // </div>
+    }
+  
    
 let makeProjectParagraph = () => {
   let newH4 = document.createElement("h4");
@@ -90,7 +132,7 @@ const createToDoParagraph = function(num) {
         newPara.textContent = '+ Add task';
         todoListParentContainer[num].appendChild(newPara);
         
-        newPara.setAttribute("id", incrementedId++);
+        newPara.setAttribute("id", uniqueID());
         newPara.setAttribute("class", "to-do");
 
 
@@ -100,7 +142,6 @@ const createToDoParagraph = function(num) {
 
 
 todoListParentContainer.forEach(element => {
-  console.log(element)
 element.addEventListener('click', (e) => {
 
   if (e.target && e.target.classList.contains('chBox')) {
@@ -153,24 +194,42 @@ function projectKeyPressed(e) {
 
 
 document.addEventListener('DOMContentLoaded', function(){
-  const tabs = document.getElementsByClassName('tab');
-  for(let i = 0; i < tabs.length; i++) {
-    tabs[i].addEventListener('click', tabSwitch);
+  let tabsContainer = document.getElementById("tab-group")
+tabsContainer.addEventListener('click', function(event) {
+  // Check if the clicked element is a tab (i.e., has the class 'tab')
+  if (event.target.classList.contains('tab')) {
+    tabSwitch(event);
   }
-
-  function tabSwitch(event){
-    document.getElementsByClassName('is-active')[0].classList.remove('is-active');
-    this.classList.add('is-active');
-    document.getElementsByClassName('is-show')[0].classList.remove('is-show');
-    const arrayTabs = Array.prototype.slice.call(tabs);
-    const index = arrayTabs.indexOf(this);
-    document.getElementsByClassName('panel')[index].classList.add('is-show');
-    let targetId = event.target.id;
-    currentTabId = targetId;
-    console.log(currentTabId)
-    return targetId;
-  };
 });
+  // const tabs = document.getElementsByClassName('tab');
+  // for(let i = 0; i < tabs.length; i++) {
+  //   tabs[i].addEventListener('click', tabSwitch);
+  // }
+
+  
+  function tabSwitch(event) {
+    const tabs = document.getElementsByClassName('tab');
+    
+    // Remove 'is-active' from the currently active tab
+    document.getElementsByClassName('is-active')[0]?.classList.remove('is-active');
+    
+    // Add 'is-active' to the clicked tab
+    event.target.classList.add('is-active');
+    
+    // Hide the currently shown panel
+    document.getElementsByClassName('is-show')[0]?.classList.remove('is-show');
+    
+    // Find the corresponding panel and show it
+    const index = Array.prototype.indexOf.call(tabs, event.target);
+    document.getElementsByClassName('panel')[index].classList.add('is-show');
+    
+    let TabId = (event.target.id);
+    currentTabId = TabId;
+ }
+});
+
+
+
 
 
 document.addEventListener('keydown', keyPressed);
