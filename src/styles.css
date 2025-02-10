@@ -157,7 +157,10 @@ height:0.1%;
 }
 
 .tab.is-active{
-border-bottom:2px solid blue;
+border-bottom:2px solid rgb(161, 161, 163);
+text-align: center;
+width:30%;
+padding-left:5rem;
 }
 
 .panel{

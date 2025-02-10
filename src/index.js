@@ -4,8 +4,10 @@
 import { addToDo } from "./todo-input.js";
 import './styles.css'
 const todoListParentContainer = document.querySelectorAll(".todo-parent")
-let addProjectInputBar = false;
-let inputBoxMade = false;
+let dynamicToDoParentUL;
+let IsAddProjectInputLineMade = false;
+let IsAddToDoInputLineMade = false;
+let  isDynamicToDoParentULmade  = false;
 let uniqueID = () => {
   return Math.floor((1 + Math.random()) * 0x10000)
       .toString(16)
@@ -14,13 +16,12 @@ let uniqueID = () => {
 
 let incrementedID = 0;
 const appendProjectsContainer = document.getElementById("append-projects")
-const isActive = document.getElementsByClassName("is-active");
 let currentTabId = 0;
-let panelName = ""
+let panelMainHeading = ""
 
 
-
-    const makeUserInputTextBox = function(){
+   //Makes the line so that you can type in text
+    const createInputBar = function(){
         let input = document.createElement("input")
         input.setAttribute('type', 'text');
         input.setAttribute('id', 'user-input');
@@ -28,7 +29,7 @@ let panelName = ""
     }
  
     const addProjectInputTextBox = function(){
-      addProjectInputBar = true;
+      IsAddProjectInputLineMade = true;
       let input = document.createElement("input")
       input.setAttribute('type', 'text');
       input.setAttribute('id', 'add-project-input');
@@ -39,13 +40,13 @@ let panelName = ""
 
     
 
-const displayUserInput = () => {
-  const textInput = document.getElementById("user-input");
-  if(textInput.value !== ""){
+const displayUserTypedText = () => {
+  const userTypedText = document.getElementById("user-input");
+  if(userTypedText.value !== ""){
     let paragraph =  document.createElement("p")
-    paragraph.textContent  = textInput.value 
+    paragraph.textContent  = userTypedText.value 
     paragraph.setAttribute("id",uniqueID())
-    textInput.replaceWith(paragraph)
+    userTypedText.replaceWith(paragraph)
       let createCheckBox = document.createElement("input");
       createCheckBox.type = "checkbox";
       createCheckBox.setAttribute("class", "chBox");
@@ -61,15 +62,15 @@ const displayUserInput = () => {
  
   const projectSideBarDisplayUserInput = () => {
 
-    const textInput = document.getElementById("add-project-input");
-    if(textInput.value !== ""){
+    const userTypedText = document.getElementById("add-project-input");
+    if(userTypedText.value !== ""){
       let paragraph =  document.createElement("p")
-      paragraph.textContent  = textInput.value 
+      paragraph.textContent  = userTypedText.value 
       paragraph.setAttribute("id",++incrementedID)
-      textInput.replaceWith(paragraph)
+      userTypedText.replaceWith(paragraph)
       paragraph.setAttribute("class","tab sidebar-text")
        let paragraphText = paragraph.textContent;
-       panelName = paragraphText;
+       panelMainHeading = paragraphText;
        createDisplayPanel();
     }
 
@@ -81,21 +82,39 @@ const displayUserInput = () => {
       let h4 = document.createElement("h4")
       let h3 = document.createElement("h3");
       let ulParent = document.createElement("ul")
-
+      let pTag = document.createElement("p");
+  isDynamicToDoParentULmade = true;
       panelDiv.setAttribute("class", "panel todo-list-items");
+      ulParent.setAttribute("class", "todo-parent");
+      pTag.setAttribute("id", uniqueID());
+      pTag.setAttribute("class", "to-do");
+      pTag.textContent = '+ Add to do!';
+
+
+      panelDiv.appendChild(h4);
+      panelDiv.appendChild(h3)
+      panelDiv.appendChild(ulParent)
+      ulParent.appendChild(pTag)
       panelGroupParent[0].appendChild(panelDiv);
 
-       panelDiv.appendChild(h4);
-       panelDiv.appendChild(h3)
+     
        h4.textContent = "Press Enter key to confirm";
   
-       h3.textContent = panelName;
-    // panelParent.appendChild(ulParent);
-      // newPara.setAttribute("class", uniqueID());
-
-
-    
-
+       h3.textContent = panelMainHeading;
+      dynamicToDoParentUL = document.querySelectorAll(".todo-parent");
+       ulParent.addEventListener('click', function(e) {
+        if (e.target && e.target.classList.contains('chBox')) {
+          // Toggle the 'checked' class when checkbox state changes
+          e.target.parentNode.classList.toggle('checked');
+        } else if (e.target === todoListParentContainer) {
+          return;
+        } else {
+          let ElementId = e.target.id;
+          getInputTextBox(ElementId);
+        }
+      });
+  
+      
      
   //     <div class="panel todo-list-items">
   //     <h4>Press Enter key to confirm</h4>
@@ -106,39 +125,46 @@ const displayUserInput = () => {
   
   //     </ul>
   // </div>
+  console.log(dynamicToDoParentUL)
     }
   
    
 let makeProjectParagraph = () => {
   let newH4 = document.createElement("h4");
-  newH4.textContent = '+ Add project';
+  newH4.textContent = '+ Add a to do!';
   appendProjectsContainer.appendChild(newH4);
   newH4.setAttribute("id", "add-project");
-  // newPara.setAttribute("class", "to-do");
 
 return newH4.textContent
 }
-// Function to display user input and add a checkbox
 const getInputTextBox = function(id) {
-  inputBoxMade = true;
         let  addToDoTextPara = document.getElementById(id);
-     addToDoTextPara.replaceWith(makeUserInputTextBox());
-        let createdInput = document.getElementById('user-input')
-        createdInput.focus();
+     addToDoTextPara.replaceWith(createInputBar());
+     IsAddToDoInputLineMade = true;
+
+        let createdInputBar = document.getElementById('user-input')
+        createdInputBar.focus();
 };
-// Function to create a new to-do list item
 const createToDoParagraph = function(num) {
+  console.log(currentTabId)
+  console.log(dynamicToDoParentUL)
+ 
         let newPara = document.createElement("p");
-        newPara.textContent = '+ Add task';
-        todoListParentContainer[num].appendChild(newPara);
-        
+        newPara.textContent = '+ Add a to do!';
+
         newPara.setAttribute("id", uniqueID());
         newPara.setAttribute("class", "to-do");
+        console.log(isDynamicToDoParentULmade)
+        if(isDynamicToDoParentULmade){
 
+          dynamicToDoParentUL[num].appendChild(newPara);
+        }else {
+          todoListParentContainer[num].appendChild(newPara);
+
+        }
 
 };
 
-// Add event listener to the 'addToDo' button
 
 
 todoListParentContainer.forEach(element => {
@@ -161,6 +187,23 @@ element.addEventListener('click', (e) => {
 
 });
 
+document.addEventListener('keydown', keyPressed);
+
+ // if  Enter Key Is Pressed
+function keyPressed(e) {
+  if(e.code === "Enter" && IsAddToDoInputLineMade) {
+    displayUserTypedText()
+    IsAddToDoInputLineMade = false;
+    // only if it equals zero make a todoParagraph
+      createToDoParagraph(currentTabId);
+      
+    // if (isToDoClass.length === 0) {
+
+    // }else {
+    //   console.log(isToDoClass.length)
+    // }
+}
+}
 
 document.addEventListener('click', (e) => {
 
@@ -175,8 +218,8 @@ createdInputBar.focus()
 document.addEventListener('keydown', projectKeyPressed);
 function projectKeyPressed(e) {
    
-  if(e.code === "Enter" && addProjectInputBar) {
-    addProjectInputBar = false;
+  if(e.code === "Enter" && IsAddProjectInputLineMade) {
+    IsAddProjectInputLineMade = false;
     projectSideBarDisplayUserInput()
 
     makeProjectParagraph()
@@ -186,10 +229,6 @@ function projectKeyPressed(e) {
 
 
 });
-// sidebarText.addEventListener('click', function(event) {
-//   let targetElement = event.target;  // Get the element that was clicked
-//   alert(targetElement.id);  // Logs the ID of the clicked element
-// });
 
 
 
@@ -201,10 +240,6 @@ tabsContainer.addEventListener('click', function(event) {
     tabSwitch(event);
   }
 });
-  // const tabs = document.getElementsByClassName('tab');
-  // for(let i = 0; i < tabs.length; i++) {
-  //   tabs[i].addEventListener('click', tabSwitch);
-  // }
 
   
   function tabSwitch(event) {
@@ -232,23 +267,3 @@ tabsContainer.addEventListener('click', function(event) {
 
 
 
-document.addEventListener('keydown', keyPressed);
-// let toDoText = createToDoParagraph();
-
-
-function keyPressed(e) {
-  if(e.code === "Enter" && inputBoxMade) {
-    displayUserInput()
-    inputBoxMade = false;
-    let isToDoClass = document.getElementsByClassName('to-do');
-    // only if it equals zero make a todoParagraph
-
-      createToDoParagraph(currentTabId);
-      
-    // if (isToDoClass.length === 0) {
-
-    // }else {
-    //   console.log(isToDoClass.length)
-    // }
-}
-}
