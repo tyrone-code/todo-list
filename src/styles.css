@@ -20,11 +20,6 @@ body {
 
 }
 
-div {
-    border:2px solid rgb(34, 31, 31);
-
-}
-
 #append-projects {
   border:none;
   cursor:pointer;
@@ -36,12 +31,19 @@ div {
 }
 
 .sidebar {
-    border:1px solid rgb(22, 22, 24);
-    padding-bottom:12rem;
+    border:4px solid rgb(22, 22, 24);
+    height:100vh;
+    border-bottom: none;
+    width:14rem;
+    
 }
 
 .sidebar h3 {
     font-size: 1.5rem;
+}
+
+.sidebar h1 {
+  text-align: center;
 }
 .main-flex-container div:nth-of-type(2) {flex-grow: 15;}
 
@@ -53,8 +55,6 @@ li {
 
 .todo-parent {
     vertical-align: bottom;
-width:100%;
-height:0.1%;
 
 .to-do {
     cursor: pointer;
@@ -155,6 +155,9 @@ height:0.1%;
   text-align:center;
   cursor:pointer;
 }
+#tab-group {
+  border:none;
+}
 
 .tab.is-active{
 border-bottom:2px solid rgb(161, 161, 163);
@@ -165,9 +168,25 @@ padding-left:5rem;
 
 .panel{
   display:none;
+  border: none;
+}
+.panel-group {
+  border-bottom:none;
+
 }
 
+.panel-group h3{
+  padding-left:3.2rem;
+}
 
+.panel-group h4{
+  text-align: center;
+  padding: 0;
+}
 .panel.is-show{
   display:block;
+}
+
+.paragraph-class {
+  padding-left:0.9rem;
 }

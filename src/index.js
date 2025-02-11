@@ -8,6 +8,7 @@ let dynamicToDoParentUL;
 let IsAddProjectInputLineMade = false;
 let IsAddToDoInputLineMade = false;
 let  isDynamicToDoParentULmade  = false;
+let isAddProjectTextMade = false;
 let uniqueID = () => {
   return Math.floor((1 + Math.random()) * 0x10000)
       .toString(16)
@@ -43,14 +44,18 @@ let panelMainHeading = ""
 const displayUserTypedText = () => {
   const userTypedText = document.getElementById("user-input");
   if(userTypedText.value !== ""){
+    
     let paragraph =  document.createElement("p")
     paragraph.textContent  = userTypedText.value 
     paragraph.setAttribute("id",uniqueID())
+    paragraph.setAttribute('class', 'paragraph-class');
     userTypedText.replaceWith(paragraph)
       let createCheckBox = document.createElement("input");
       createCheckBox.type = "checkbox";
       createCheckBox.setAttribute("class", "chBox");
+
       paragraph.appendChild(createCheckBox)
+      
   }else {
     return
   }
@@ -106,11 +111,11 @@ const displayUserTypedText = () => {
         if (e.target && e.target.classList.contains('chBox')) {
           // Toggle the 'checked' class when checkbox state changes
           e.target.parentNode.classList.toggle('checked');
-        } else if (e.target === todoListParentContainer) {
-          return;
-        } else {
+        } else if (!e.target.classList.contains("paragraph-class") && !e.target.classList.contains("todo-parent")) {
           let ElementId = e.target.id;
-          getInputTextBox(ElementId);
+          getInputTextBox(ElementId)
+        } else {
+         return
         }
       });
   
@@ -125,13 +130,12 @@ const displayUserTypedText = () => {
   
   //     </ul>
   // </div>
-  console.log(dynamicToDoParentUL)
     }
   
    
 let makeProjectParagraph = () => {
   let newH4 = document.createElement("h4");
-  newH4.textContent = '+ Add a to do!';
+  newH4.textContent = '+ Add a project!';
   appendProjectsContainer.appendChild(newH4);
   newH4.setAttribute("id", "add-project");
 
@@ -146,15 +150,12 @@ const getInputTextBox = function(id) {
         createdInputBar.focus();
 };
 const createToDoParagraph = function(num) {
-  console.log(currentTabId)
-  console.log(dynamicToDoParentUL)
  
         let newPara = document.createElement("p");
         newPara.textContent = '+ Add a to do!';
 
         newPara.setAttribute("id", uniqueID());
         newPara.setAttribute("class", "to-do");
-        console.log(isDynamicToDoParentULmade)
         if(isDynamicToDoParentULmade){
 
           dynamicToDoParentUL[num].appendChild(newPara);
@@ -174,12 +175,11 @@ element.addEventListener('click', (e) => {
 
         // Toggle the 'checked' class when checkbox state changes
         e.target.parentNode.classList.toggle('checked');
-    }else if (e.target === todoListParentContainer) {
-      return
-    }else {
+    }else if ((!e.target.classList.contains("paragraph-class") && !e.target.classList.contains("todo-parent"))) {
       let ElementId = e.target.id;
-        
       getInputTextBox(ElementId);
+    }else {
+      return
     }
 
 
@@ -187,21 +187,22 @@ element.addEventListener('click', (e) => {
 
 });
 
+
 document.addEventListener('keydown', keyPressed);
+let parentElement = document.querySelector('.todo-list-items');  // Select the parent element
+let childWithClass = parentElement.querySelectorAll('.to-do');  // Find all children with the class 'to-do'
 
  // if  Enter Key Is Pressed
 function keyPressed(e) {
+    let isToDoClass = document.querySelectorAll(".to-do");
   if(e.code === "Enter" && IsAddToDoInputLineMade) {
+createToDoParagraph(currentTabId)
     displayUserTypedText()
+    isAddProjectTextMade = true;
     IsAddToDoInputLineMade = false;
     // only if it equals zero make a todoParagraph
-      createToDoParagraph(currentTabId);
       
-    // if (isToDoClass.length === 0) {
-
-    // }else {
-    //   console.log(isToDoClass.length)
-    // }
+ 
 }
 }
 
