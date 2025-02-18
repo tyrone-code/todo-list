@@ -12,7 +12,7 @@ let incrementedID = 0;
 let currentTabId = 0;
 let panelMainHeading = "";
 let dynamicToDoParentUL;
-let IsAddProjectInputLineMade = false;
+let isAddProjectInputLineMade = false;
 let IsAddToDoInputLineMade = false;
 let isDynamicToDoParentULmade = false;
 const todoListParentContainer = document.querySelectorAll(".todo-parent");
@@ -27,13 +27,21 @@ const createInputBar = function() {
   return input;
 };
 const addProjectInputTextBox = function() {
-  IsAddProjectInputLineMade = true;
+  isAddProjectInputLineMade = true;
   let input = document.createElement("input");
   input.setAttribute('type', 'text');
   input.setAttribute('id', 'add-project-input');
   input.setAttribute('placeholder', 'Enter project name');
   return input;
 };
+
+
+// Delete a to-do;
+
+
+
+
+
 
 // Create Project Panel
 const createDisplayPanel = () => {
@@ -43,37 +51,65 @@ const createDisplayPanel = () => {
   let h3 = document.createElement("h2");
   let ulParent = document.createElement("ul");
   let pTag = document.createElement("p");
+  let deleteProject = document.createElement('button');
+
   
+
+
+
   isDynamicToDoParentULmade = true;
   
   panelDiv.setAttribute("class", "panel todo-list-items");
   ulParent.setAttribute("class", "todo-parent");
+  deleteProject.innerText = 'Delete Entire Project'
+
+  deleteProject.setAttribute('class', 'project-delete-btn')
+
   pTag.setAttribute("id", uniqueID());
   pTag.setAttribute("class", "to-do");
   pTag.textContent = '+ Add a to do!';
-  
+  ulParent.appendChild(deleteProject)
+
   panelDiv.appendChild(h4);
   panelDiv.appendChild(h3);
   panelDiv.appendChild(ulParent);
   ulParent.appendChild(pTag);
   panelGroupParent[0].appendChild(panelDiv);
+
+
   
   h4.textContent = "Press Enter key to confirm";
   h3.textContent = panelMainHeading;
-  
+
   dynamicToDoParentUL = document.querySelectorAll(".todo-parent");
   
   ulParent.addEventListener('click', function(e) {
-    if (e.target && e.target.classList.contains('chBox')) {
+    if((e.target.classList.contains('project-delete-btn'))){
+      let delButton = e.target.parentNode
+      delButton.remove();
+      incrementedID--;
+      console.log(incrementedID)
+      document.querySelector(".is-show").remove();
+      document.querySelector(".is-active").remove();
+
+  
+    }
+    else if((e.target.classList.contains('delete-btn'))){
+      let delButton = e.target.parentNode
+      delButton.remove();
+    }
+    else if (e.target && e.target.classList.contains('chBox')) {
       // Toggle the 'checked' class when checkbox state changes
       e.target.parentNode.classList.toggle('checked');
     } else if (!e.target.classList.contains("paragraph-class") && !e.target.classList.contains("todo-parent")) {
       let ElementId = e.target.id;
       getInputTextBox(ElementId);
     } else {
-      return;
+      return
     }
+   
   });
+
 };
 
 // Make Project Paragraph
@@ -92,17 +128,23 @@ const displayUserTypedText = () => {
 
   if (userTypedText.value.trim() !== "") { // Check for non-empty input
     let paragraph = document.createElement("p");
+    let deleteButton = document.createElement('button');
+    deleteButton.innerText = 'Delete'
 
+
+ 
     paragraph.textContent = userTypedText.value;
     paragraph.setAttribute("id", uniqueID());
     paragraph.setAttribute('class', 'paragraph-class');
-
+    deleteButton.setAttribute('class', 'delete-btn')
     // Create checkbox and append to paragraph
     let createCheckBox = document.createElement("input");
     createCheckBox.type = "checkbox";
     createCheckBox.setAttribute("class", "chBox");
 
+
     paragraph.appendChild(createCheckBox);
+    paragraph.appendChild(deleteButton)
 
     // Replace input with paragraph in the DOM
     userTypedText.replaceWith(paragraph);
@@ -117,17 +159,22 @@ const displayUserTypedText = () => {
   }
 };
 
+
+
  
 // Project Side Bar Display User Input
 const projectSideBarDisplayUserInput = () => {
   const userTypedText = document.getElementById("add-project-input");
   if(userTypedText.value.trim() !== ""){
+
     let paragraph =  document.createElement("p");
+   
     paragraph.textContent  = userTypedText.value;
     paragraph.setAttribute("id", ++incrementedID);
     let paragraphText = paragraph.textContent;
     panelMainHeading = paragraphText;
     paragraph.setAttribute("class","tab sidebar-text");
+
     
     userTypedText.replaceWith(paragraph);
 
@@ -135,7 +182,7 @@ const projectSideBarDisplayUserInput = () => {
 
     createDisplayPanel();
     makeProjectParagraph();
-    IsAddProjectInputLineMade = false;
+    isAddProjectInputLineMade = false;
 
 
   }else {
@@ -165,6 +212,7 @@ const createToDoParagraph = function(num) {
   
   if(isDynamicToDoParentULmade) {
     dynamicToDoParentUL[num].appendChild(newPara);
+
   } else {
     todoListParentContainer[num].appendChild(newPara);
   }
@@ -172,8 +220,13 @@ const createToDoParagraph = function(num) {
 
 // Event Listener for To-Do Interaction
 todoListParentContainer.forEach(element => {
+  
   element.addEventListener('click', (e) => {
-    if (e.target && e.target.classList.contains('chBox')) {
+    if((e.target.classList.contains('delete-btn'))){
+      let delButton = e.target.parentNode
+      delButton.remove();
+    }
+    else if (e.target && e.target.classList.contains('chBox')) {
       // Toggle the 'checked' class when checkbox state changes
       e.target.parentNode.classList.toggle('checked');
     } else if ((!e.target.classList.contains("paragraph-class") && !e.target.classList.contains("todo-parent"))) {
@@ -182,6 +235,9 @@ todoListParentContainer.forEach(element => {
     } else {
       return;
     }
+
+
+
   });
 });
 
@@ -192,7 +248,7 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
-// Click Event for Project Input
+// Click Event for Project Input-
 document.addEventListener('click', (e) => {
   if(e.target.id === "add-project") {
     let addProjectTextElement = e.target;
@@ -200,12 +256,13 @@ document.addEventListener('click', (e) => {
     let createdInputBar = document.getElementById("add-project-input");
     createdInputBar.focus();
   }
+  
 });
 
 
 
 document.addEventListener('keydown', function (e) {
-  if (e.code === "Enter" && IsAddProjectInputLineMade) {
+  if (e.code === "Enter" && isAddProjectInputLineMade) {
     projectSideBarDisplayUserInput();
 
   }

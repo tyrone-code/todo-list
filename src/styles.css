@@ -122,3 +122,11 @@ cursor: pointer;
 .sidebar-text {
   font-size: 1.4rem;
 }
+
+.todo-parent p{
+  font-size: 1.2rem;
+}
+
+input[type="checkbox"] {
+ /* border-radius: 100%; */
+}
