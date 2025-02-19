@@ -51,6 +51,8 @@ const createDisplayPanel = () => {
   let h3 = document.createElement("h2");
   let ulParent = document.createElement("ul");
   let pTag = document.createElement("p");
+  let delProjContainer = document.createElement("div");
+
   let deleteProject = document.createElement('button');
 
   
@@ -61,14 +63,15 @@ const createDisplayPanel = () => {
   
   panelDiv.setAttribute("class", "panel todo-list-items");
   ulParent.setAttribute("class", "todo-parent");
-  deleteProject.innerText = 'Delete Entire Project'
+  deleteProject.innerText = 'Delete Entire Project?'
 
   deleteProject.setAttribute('class', 'project-delete-btn')
 
   pTag.setAttribute("id", uniqueID());
   pTag.setAttribute("class", "to-do");
   pTag.textContent = '+ Add a to do!';
-  ulParent.appendChild(deleteProject)
+  delProjContainer.appendChild(deleteProject)
+  ulParent.appendChild(delProjContainer)
 
   panelDiv.appendChild(h4);
   panelDiv.appendChild(h3);
