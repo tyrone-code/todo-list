@@ -1,25 +1,66 @@
-// Select the button
-const button = document.getElementById("myButton");
-const todoList = document.getElementById("todo-list");
+// Class definitions
+class Todo {
+  constructor(todoDiscriptionValue) {
+    this.todoDiscriptionKey = todoDiscriptionValue;
+  }
+}
 
-let todos = [];
-// Add event listener
-button.addEventListener("click", function () {
+class NewProject {
+  constructor(projectNameValue) {
+    this.projectNameKey = projectNameValue;
+    this.todosArrKey = [];
+  }
+  addTodo(userInput) {
+    this.todosArrKey.push(userInput);
+  }
+}
+
+// DOM elements
+const clickForTodo = document.getElementById("add-todo");
+const defaultTodoList = document.getElementById("todo-list-default");
+const newProjectBtn = document.getElementById("new-project");
+const container = document.getElementById("container");
+
+// Data arrays
+let todosArr = [];
+let projectsArr = [];
+
+// Event listeners
+
+clickForTodo.addEventListener("click", function () {
   const todo = prompt("Enter a todo:");
-  const newTodo = new Todo(todo);
-  todos.push(newTodo);
-  todoList.innerHTML = todos
+  const newTodoObj = new Todo(todo);
+  todosArr.push(newTodoObj);
+  defaultTodoList.innerHTML = todosArr
     .map((t) => `<li>${t.todoDiscriptionKey}</li>`)
     .join("");
 });
 
-function getUserInput() {
-  const userInput = prompt("Enter todo:");
-  return userInput;
-}
+newProjectBtn.addEventListener("click", function () {
+  const projectName = prompt("Enter the project name:");
+  const newProjectsObj = new NewProject(projectName);
+  projectsArr.push(newProjectsObj);
 
-function Todo(todoDiscriptionValue) {
-  this.todoDiscriptionKey = todoDiscriptionValue;
-}
+  const div = document.createElement("div");
+  div.innerHTML = `
+            <h3>${newProjectsObj.projectNameKey}</h3>
+            <button id="add-todo">click for todo</button>
+            <ul id="todo-list"></ul>
+        `;
+  container.appendChild(div);
 
-// console.log(todo1.todoDiscriptionKey);
+  const newButton = div.querySelector("#add-todo");
+  const ul = div.querySelector("#todo-list");
+
+  newButton.addEventListener("click", function () {
+    const todo = prompt("Enter a todo:");
+    newProjectsObj.addTodo(todo);
+
+    ul.innerHTML = "";
+    newProjectsObj.todosArrKey.forEach((todo) => {
+      const li = document.createElement("li");
+      li.textContent = todo;
+      ul.appendChild(li);
+    });
+  });
+});
